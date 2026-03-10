@@ -66,8 +66,9 @@ def add_book(request):
             rating=rating,
             review=review,
         )
-    except:
-        return Response({"error": "There was problem while adding book!"}, status=400)
+    except Exception as e:
+        print(e)
+        return Response({"error": f"There was problem while adding book! Details: {str(e)}"}, status=400)
 
     return Response({"message": "Book added to library!"}, status=201)
 
