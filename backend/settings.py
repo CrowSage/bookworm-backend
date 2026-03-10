@@ -76,4 +76,6 @@ REST_FRAMEWORK = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "https://bookworm-frontend-beta.vercel.app",
+    "https://bookworm-frontend-98uxq1m8c-crowsages-projects.vercel.app",
 ]
