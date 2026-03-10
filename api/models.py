@@ -12,8 +12,8 @@ class UserBook(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book_id = models.CharField(max_length=100)
-    title = models.CharField(max_length=100)
-    authors = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
+    authors = models.CharField(max_length=500)
     thumbnail = models.URLField(blank=True, null=True)
     status = models.CharField(
         max_length=20, choices=Status.choices, default=Status.WANT_TO_READ
