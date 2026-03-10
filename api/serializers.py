@@ -18,7 +18,6 @@ class UserBookSerializer(serializers.ModelSerializer):
         model = UserBook
         fields = [
             "id",
-            "user",
             "book_id",
             "title",
             "authors",
