@@ -12,6 +12,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserBookSerializer(serializers.ModelSerializer):
+    status = serializers.CharField(required=False)
+
     class Meta:
         model = UserBook
         fields = [
@@ -28,3 +30,14 @@ class UserBookSerializer(serializers.ModelSerializer):
             "review",
             "date_added",
         ]
+
+    def validate_title(self, value):
+        if len(value) > 255:
+            return value[:255]
+        return value
+
+    def validate_authors(self, value):
+        if len(value) > 500:
+            return value[:500]
+        return value
+

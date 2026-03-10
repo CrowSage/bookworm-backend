@@ -36,39 +36,11 @@ def library(request):
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def add_book(request):
-    try:
-        user = request.user
-        book_id = request.data.get("book_id")
-        title = request.data.get("title")
-        authors = request.data.get("authors")
-        thumbnail = request.data.get("thumbnail")
-        status = request.data.get("status") or "want_to_read"
-        date_started = request.data.get("date_started")
-        date_finished = request.data.get("date_finished")
-        rating = request.data.get("rating")
-        review = request.data.get("review")
-
-        # Not accepting no book id or authors or title
-        if not book_id or not title or not authors:
-            return Response(
-                {"error": "book_id, title and authors are required"}, status=400
-            )
-
-        UserBook.objects.create(
-            user=user,
-            book_id=book_id,
-            title=title,
-            authors=authors,
-            thumbnail=thumbnail,
-            status=status,
-            date_started=date_started,
-            date_finished=date_finished,
-            rating=rating,
-            review=review,
-        )
-    except Exception as e:
-        print(e)
-        return Response({"error": f"There was problem while adding book! Details: {str(e)}"}, status=400)
+    serializer = UserBookSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(user=request.user)
+        return Response({"message": "Book added to library!"}, status=201)
+    return Response(serializer.errors, status=400)
 
     return Response({"message": "Book added to library!"}, status=201)
 
